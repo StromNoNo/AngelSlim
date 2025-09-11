@@ -88,6 +88,7 @@ class BaseLLMModel(metaclass=ABCMeta):
         self.quant_config = quant_config
         self.act_scales_dict = {}
         self.weight_scales_dict = {}
+        self.weight_scales_dict_2 = {}
         self.kv_cache_scales_dict = {}
         if hasattr(self.quant_config, "weight_observer"):
             self.quant_algo_dict = self.get_quant_config()
