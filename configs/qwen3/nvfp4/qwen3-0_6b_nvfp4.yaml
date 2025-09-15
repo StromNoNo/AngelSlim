@@ -19,8 +19,8 @@ compression:
     name: nvfp4
     bits: 4
     quant_method:
-      weight: "per-tensor"
-      activation: "per-tensor"
+      weight: "per-block"
+      activation: "per-block"
       group_size: 16
     ignore_layers:         # Skip quantization for these layers
       - "lm_head"

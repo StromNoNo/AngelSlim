@@ -154,11 +154,9 @@ class QuantConfig:
                 is_dynamic or act_quant_method is not None
             ), "[Error] nvfp4 need act_quant_method"
             self.act_observer = (
-                ACT_OBSERVERS_CLASS[act_quant_method]
-                if "static" in is_dynamic
-                else None
+                AbsmaxPertensorObserver if "static" in is_dynamic else None
             )
-            self.weight_observer = WEIGHT_OBSERVERS_CLASS[weight_quant_method]
+            self.weight_observer = AbsmaxPertensorObserver
             self.kv_cache_observer = None
             block_size = (
                 16

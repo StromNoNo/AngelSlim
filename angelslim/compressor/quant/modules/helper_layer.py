@@ -36,12 +36,6 @@ from ..core import (
     tensor_quant_dequant_int,
 )
 
-# Define conversion tables
-e2m1_bounds = torch.tensor([0.25, 0.75, 1.25, 1.75, 2.5, 3.5, 5])
-e2m1_values = torch.tensor(
-    [0, 0.5, 1, 1.5, 2, 3, 4, 6, 0, -0.5, -1, -1.5, -2, -3, -4, -6]
-)
-
 
 def flush():
     gc.collect()
@@ -738,6 +732,11 @@ class NVFP4QDQModule(torch.nn.Module):
         input_scale: Optional[torch.nn.Parameter] = None,
     ):
         super().__init__()
+        # Define conversion tables
+        self.e2m1_bounds = torch.tensor([0.25, 0.75, 1.25, 1.75, 2.5, 3.5, 5])
+        self.e2m1_values = torch.tensor(
+            [0, 0.5, 1, 1.5, 2, 3, 4, 6, 0, -0.5, -1, -1.5, -2, -3, -4, -6]
+        )
         self.e2m1_values_on_device = {}
         self.shape = weight.shape
         self.dtype = weight.dtype
@@ -761,7 +760,7 @@ class NVFP4QDQModule(torch.nn.Module):
     def get_e2m1_values(self, device):
         """Returns the e2m1 values on the device."""
         if device not in self.e2m1_values_on_device:
-            self.e2m1_values_on_device[device] = e2m1_values.to(device)
+            self.e2m1_values_on_device[device] = self.e2m1_values.to(device)
         return self.e2m1_values_on_device[device]
 
     def _cast_fp4(self, weight: torch.Tensor):
@@ -778,13 +777,13 @@ class NVFP4QDQModule(torch.nn.Module):
 
         weight_abs = weight.abs_()
         # Calculate the ordinal value based on the bounds
-        ord = torch.searchsorted(e2m1_bounds.to(device), weight_abs, out_int32=True).to(
-            torch.uint8
-        )
+        ord = torch.searchsorted(
+            self.e2m1_bounds.to(device), weight_abs, out_int32=True
+        ).to(torch.uint8)
         # All values equal to e2m1_bounds at odd indices are rounded up
         # and even indices are rounded down
         round = torch.any(
-            (weight_abs.unsqueeze(-1) == e2m1_bounds.to(device)) * mask, dim=-1
+            (weight_abs.unsqueeze(-1) == self.e2m1_bounds.to(device)) * mask, dim=-1
         )
         fp4_val = (sign_bit * 0b1000 + ord + round).to(torch.uint8)
         return fp4_val
