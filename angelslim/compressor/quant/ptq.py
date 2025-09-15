@@ -226,7 +226,7 @@ class PTQ:
 
             if "nvfp4" in self.quant_algo:
                 self.nvfp4.post_process(sub_layer, name)
-                qdq_module = self.nvfp4.get_qdq_module(sub_layer, name)
+                qdq_module = self.quant_model.get_nvfp4_qdq_module(sub_layer, name)
             else:
                 qdq_module = self.quant_model.get_qdq_module(sub_layer, name)
 

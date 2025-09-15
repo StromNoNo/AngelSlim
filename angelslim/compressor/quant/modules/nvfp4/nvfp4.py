@@ -16,7 +16,6 @@
 import torch
 
 from .....utils import print_info
-from ...modules.helper_layer import NVFP4QDQModule
 
 __all__ = ["NVFP4"]
 
@@ -28,7 +27,7 @@ class NVFP4:
     ):
         """
         Args:
-            model(nn.Module, required): The model to be smoothed.
+            model(nn.Module, required): The model to be quanted.
         """
         super(NVFP4, self).__init__()
         self.model = model
@@ -104,23 +103,3 @@ class NVFP4:
         input_observer_amax = self.model.act_scales_dict[name]
         input_scale = self.get_activation_scaling_factor(input_observer_amax)
         self.model.act_scales_dict[name] = input_scale
-
-    def get_qdq_module(self, sub_layer, name):
-        act_scale, weight_scale, weight_scale_2 = None, None, None
-        if name in self.model.act_scales_dict:
-            act_scale = self.model.act_scales_dict[name]
-        if name in self.model.weight_scales_dict:
-            weight_scale = self.model.weight_scales_dict[name]
-        if name in self.model.weight_scales_dict_2:
-            weight_scale_2 = self.model.weight_scales_dict_2[name]
-
-        q_linear = NVFP4QDQModule(
-            weight=sub_layer.weight,
-            weight_scale=weight_scale,
-            weight_scale_2=weight_scale_2,
-            bias=sub_layer.bias,
-            block_size=self.block_size,
-            input_scale=act_scale,
-        )
-
-        return q_linear
