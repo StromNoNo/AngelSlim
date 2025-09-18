@@ -219,7 +219,7 @@ class PTQ:
 
         quant_convert_module = self.quant_model.get_quant_convert_module()
         if "nvfp4" in self.quant_algo:
-            self.nvfp4.get_observer_values()
+            self.quant_model.get_observer_values()
         # 2. insert qdq module
         for name, sub_layer in self.ptq_hook.quant_layers_dict.items():
             parent_layer, sub_name = find_parent_layer_and_sub_name(

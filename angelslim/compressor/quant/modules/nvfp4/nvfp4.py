@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import copy
-
 import torch
 
 from .....utils import print_info
@@ -90,42 +88,9 @@ class NVFP4:
         return q_per_block_scale
 
     def post_process(self, sub_layer, name):
-        if "q_proj" in name or "k_proj" in name or "v_proj" in name:
-            prefix = name.rsplit(".", 1)[0]
-            q_name = f"{prefix}.q_proj"
-            k_name = f"{prefix}.k_proj"
-            v_name = f"{prefix}.v_proj"
-
-            weight_scales = []
-            for key in [q_name, k_name, v_name]:
-                tensor = self.weight_observer_amax_dict[key]
-                weight_scales.append(tensor)
-            weight_observer_amax = max(weight_scales)
-
-            act_scales = []
-            for key in [q_name, k_name, v_name]:
-                tensor = self.input_observer_amax_dict[key]
-                act_scales.append(tensor)
-            input_observer_amax = max(act_scales)
-        elif "gate_proj" in name or "up_proj" in name:
-            prefix = name.rsplit(".", 1)[0]
-            gate_name = f"{prefix}.gate_proj"
-            up_name = f"{prefix}.up_proj"
-
-            weight_scales = []
-            for key in [gate_name, up_name]:
-                tensor = self.weight_observer_amax_dict[key]
-                weight_scales.append(tensor)
-            weight_observer_amax = max(weight_scales)
-
-            act_scales = []
-            for key in [gate_name, up_name]:
-                tensor = self.input_observer_amax_dict[key]
-                act_scales.append(tensor)
-            input_observer_amax = max(act_scales)
-        else:
-            weight_observer_amax = self.weight_observer_amax_dict[name]
-            input_observer_amax = self.input_observer_amax_dict[name]
+        weight_observer_amax, input_observer_amax = self.model.get_observer_amax(
+            sub_layer, name
+        )
 
         weight_scale_2 = self.get_weights_scaling_factor_2(weight_observer_amax)
         self.model.weight_scales_dict_2[name] = weight_scale_2
@@ -139,7 +104,3 @@ class NVFP4:
 
         input_scale = self.get_activation_scaling_factor(input_observer_amax)
         self.model.act_scales_dict[name] = input_scale
-
-    def get_observer_values(self):
-        self.weight_observer_amax_dict = copy.deepcopy(self.model.weight_scales_dict)
-        self.input_observer_amax_dict = copy.deepcopy(self.model.act_scales_dict)
