@@ -88,7 +88,9 @@ class NVFP4:
         return q_per_block_scale
 
     def post_process(self, sub_layer, name):
-        weight_observer_amax, input_observer_amax = self.model.get_observer_amax(
+        # TODO:Fuse observer amax because TRT-LLM requires the qkv,
+        # gate and up to share the weight_scale2
+        weight_observer_amax, input_observer_amax = self.model.fuse_observer_amax(
             sub_layer, name
         )
 

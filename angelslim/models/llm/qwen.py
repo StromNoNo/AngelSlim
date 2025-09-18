@@ -95,7 +95,7 @@ class Qwen(BaseLLMModel):
                 f"deploy_backend {self.deploy_backend} is not supported for saving."
             )
 
-    def get_observer_amax(self, sub_layer, name):
+    def fuse_observer_amax(self, sub_layer, name):
         if "q_proj" in name or "k_proj" in name or "v_proj" in name:
             prefix = name.rsplit(".", 1)[0]
             q_name = f"{prefix}.q_proj"
