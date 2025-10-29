@@ -121,8 +121,8 @@ class MultiModalDataset(BaseDataset):
                 messages, tokenize=False, add_generation_prompt=True
             )
 
-        # Extract vision info
-        image_inputs, video_inputs = qwen_vl_utils.process_vision_info(messages)
+            # Extract vision info
+            image_inputs, video_inputs = qwen_vl_utils.process_vision_info(messages)
 
             # Process inputs
             inputs = self.processor(
