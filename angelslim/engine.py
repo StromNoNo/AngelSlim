@@ -116,13 +116,6 @@ class Engine:
                     using_multi_nodes=using_multi_nodes,
                 )
                 self.model_path = model_path
-        elif self.series == "Diffusion":
-            if not model:
-                self.slim_model.from_pretrained(
-                    model_path,
-                    torch_dtype=torch_dtype,
-                    cache_dir=cache_dir,
-                )
         else:
             raise ValueError(f"Unsupported series: {self.series}")
 
@@ -206,7 +199,6 @@ class Engine:
             slim_config = {
                 "global_config": global_config,
                 "compress_config": compress_config,
-                "model_path": self.model_path,
             }
         self.compress_type = compress_names
         self.only_inference = (
@@ -370,8 +362,6 @@ class InferEngine(Engine):
                 ).input_ids,
                 **kwargs,
             )
-        elif self.series == "Diffusion":
-            return self.slim_model.generate(input_prompt, **kwargs)
         else:
             raise NotImplementedError(
                 f"Series {self.series} is not implemented for inference"

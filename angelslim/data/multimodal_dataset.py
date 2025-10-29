@@ -18,10 +18,10 @@ from typing import Dict, List, Union
 
 from datasets import load_dataset
 from PIL import Image
-from qwen_vl_utils import process_vision_info
 from tqdm import tqdm
 from transformers import ProcessorMixin
 
+from ..utils.lazy_imports import qwen_vl_utils
 from .base_dataset import BaseDataset
 
 
@@ -121,8 +121,8 @@ class MultiModalDataset(BaseDataset):
                 messages, tokenize=False, add_generation_prompt=True
             )
 
-            # Extract vision info
-            image_inputs, video_inputs = process_vision_info(messages)
+        # Extract vision info
+        image_inputs, video_inputs = qwen_vl_utils.process_vision_info(messages)
 
             # Process inputs
             inputs = self.processor(
