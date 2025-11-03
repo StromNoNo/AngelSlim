@@ -439,7 +439,26 @@ Benchmark results for DeepSeek-R1-0528 series models with `FP8-Block-Wise` and `
   </tbody>
 </table>
 
-#### 1.4 Qwen-VL 系列模型
+<details>
+<summary>Note</summary>
+
+> - The above results are based on the average of 5 test runs deployed with TRT-LLM
+> - The hyperparameters used during evaluation are as follows:
+> ```json
+>{
+>  "top_k": 20,
+>  "top_p": 0.6,
+>  "temperature": 0.7,
+>  "output_seq_len": 32768,
+>  "max_input_seq_len": 16384
+>}
+>```
+
+</details>
+
+#### 1.4 Qwen-VL Series Models
+
+<summary><strong>Qwen3-VL Benchmark</strong></summary>
 
 Benchmark results for Qwen3VL series models with `BF16`、`FP8-Static` and `FP8-Dynamic` quantization algorithms on datasets including `MMMU_VAL`、`DocVQA_VAL` and `ChartQA_TEST`：
 
@@ -455,21 +474,6 @@ Benchmark results for Qwen3VL series models with `BF16`、`FP8-Static` and `FP8-
     <tr><td>FP8-Dynamic</td><td>50.67</td><td>95.25</td><td>95.20</td></tr>
   </tbody>
 </table>
-
-<details>
-<summary>Note</summary>
-
-> - The above results are based on the average of 5 test runs deployed with TRT-LLM
-> - The hyperparameters used during evaluation are as follows:
-> ```json
->{
->  "top_k": 20,
->  "top_p": 0.6,
->  "temperature": 0.7,
->  "output_seq_len": 32768,
->  "max_input_seq_len": 16384
->}
->```
 
 <details>
 <summary><strong>Qwen2.5VL Benchmark</strong></summary>

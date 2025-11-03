@@ -446,7 +446,26 @@ DeepSeek-R1-0528模型的`FP8-Block-Wise`、`W4A8-FP8`在`GPQA Diamond`、`AIME 
   </tbody>
 </table>
 
+<details>
+<summary>备注</summary>
+
+> - 以上评测结果使用TRT-LLM框架部署测试5次求平均
+> - 评测时使用的超参如下:
+> ```json
+>{
+>  "top_k": 20,
+>  "top_p": 0.6,
+>  "temperature": 0.7,
+>  "output_seq_len": 32768,
+>  "max_input_seq_len": 16384
+>}
+>```
+
+</details>
+
 #### 1.4 Qwen-VL 系列模型
+
+<summary><strong>Qwen3-VL Benchmark</strong></summary>
 
 Qwen3VL系列模型的`BF16`、`FP8-Static`、`FP8-Dynamic`在`MMMU_VAL`、`DocVQA_VAL`、`ChartQA_TEST`上的评测结果如下：
 
@@ -464,22 +483,7 @@ Qwen3VL系列模型的`BF16`、`FP8-Static`、`FP8-Dynamic`在`MMMU_VAL`、`DocV
 </table>
 
 <details>
-<summary>备注</summary>
-
-> - 以上评测结果使用TRT-LLM框架部署测试5次求平均
-> - 评测时使用的超参如下:
-> ```json
->{
->  "top_k": 20,
->  "top_p": 0.6,
->  "temperature": 0.7,
->  "output_seq_len": 32768,
->  "max_input_seq_len": 16384
->}
->```
-
-<details>
-<summary><li><strong>Qwen2.5VL Benchmark</strong></li></summary>
+<summary><strong>Qwen2.5VL Benchmark</strong></summary>
 
 Qwen2.5VL系列模型的`BF16`、`FP8-Static`、`FP8-Dynamic`、`INT4-GPTQ`、`INT4-AWQ`在`MMMU_VAL`、`DocVQA_VAL`、`ChartQA_TEST`上的评测结果如下：
 
