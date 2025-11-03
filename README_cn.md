@@ -465,7 +465,7 @@ DeepSeek-R1-0528模型的`FP8-Block-Wise`、`W4A8-FP8`在`GPQA Diamond`、`AIME 
 
 #### 1.4 Qwen-VL 系列模型
 
-<summary><strong>Qwen3-VL Benchmark</strong></summary>
+**Qwen3-VL Benchmark**
 
 Qwen3VL系列模型的`BF16`、`FP8-Static`、`FP8-Dynamic`在`MMMU_VAL`、`DocVQA_VAL`、`ChartQA_TEST`上的评测结果如下：
 

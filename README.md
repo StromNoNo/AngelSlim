@@ -458,7 +458,7 @@ Benchmark results for DeepSeek-R1-0528 series models with `FP8-Block-Wise` and `
 
 #### 1.4 Qwen-VL Series Models
 
-<summary><strong>Qwen3-VL Benchmark</strong></summary>
+**Qwen3-VL Benchmark**
 
 Benchmark results for Qwen3VL series models with `BF16`、`FP8-Static` and `FP8-Dynamic` quantization algorithms on datasets including `MMMU_VAL`、`DocVQA_VAL` and `ChartQA_TEST`：
 
