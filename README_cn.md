@@ -446,6 +446,23 @@ DeepSeek-R1-0528模型的`FP8-Block-Wise`、`W4A8-FP8`在`GPQA Diamond`、`AIME 
   </tbody>
 </table>
 
+#### 1.4 Qwen-VL 系列模型
+
+Qwen3VL系列模型的`BF16`、`FP8-Static`、`FP8-Dynamic`在`MMMU_VAL`、`DocVQA_VAL`、`ChartQA_TEST`上的评测结果如下：
+
+<table>
+  <thead>
+    <tr><th>Model</th><th>Quantization</th><th>MMMU_VAL</th><th>DocVQA_VAL</th><th>ChartQA_TEST</th></tr>
+  </thead>
+  <tbody>
+    <tr><td rowspan="3">Qwen3-VL-32B-Instruct</td><td>BF16</td><td>60.11</td><td>96.08</td><td>94.64</td></tr>
+    <tr><td>FP8-Static</td><td>61.22</td><td>96.00</td><td>94.64</td></tr>
+    <tr><td>FP8-Dynamic</td><td>60.78</td><td>96.19</td><td>94.72</td></tr>
+    <tr><td rowspan="2">Qwen3-VL-30B-A3B-Instruct</td><td>BF16</td><td>50.44</td><td>95.28</td><td>95.36</td></tr>
+    <tr><td>FP8-Dynamic</td><td>50.67</td><td>95.25</td><td>95.20</td></tr>
+  </tbody>
+</table>
+
 <details>
 <summary>备注</summary>
 
@@ -460,14 +477,6 @@ DeepSeek-R1-0528模型的`FP8-Block-Wise`、`W4A8-FP8`在`GPQA Diamond`、`AIME 
 >  "max_input_seq_len": 16384
 >}
 >```
-
-</details>
-
-#### 1.4 Qwen-VL 系列模型
-
-- **Qwen3-VL Benchmark**
-
-待更新
 
 <details>
 <summary><li><strong>Qwen2.5VL Benchmark</strong></li></summary>
